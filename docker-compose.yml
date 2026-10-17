@@ -1,0 +1,40 @@
+services:
+  terraform:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    working_dir: /workspace
+    volumes:
+      - .:/workspace
+      - terraform_plugins:/root/.terraform.d/plugin-cache
+    environment:
+      AWS_ACCESS_KEY_ID: test
+      AWS_SECRET_ACCESS_KEY: test
+      AWS_DEFAULT_REGION: us-east-1
+      AWS_REGION: us-east-1
+      TF_PLUGIN_CACHE_DIR: /root/.terraform.d/plugin-cache
+    depends_on:
+      localstack:
+        condition: service_healthy
+    entrypoint: ["terraform"]
+
+  localstack:
+    image: localstack/localstack:4.8
+    ports:
+      - "4566:4566"
+    environment:
+      SERVICES: s3
+      AWS_DEFAULT_REGION: us-east-1
+      DEBUG: "0"
+    volumes:
+      - localstack_data:/var/lib/localstack
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4566/_localstack/health"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  terraform_plugins:
+  localstack_data:
