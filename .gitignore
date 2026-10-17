@@ -1,0 +1,32 @@
+# Terraform: proveedores descargados y datos de ejecución
+**/.terraform/
+**/*.tfstate
+**/*.tfstate.*
+**/crash.log
+**/crash.*.log
+
+# Planes y archivos de configuración locales de Terraform
+**/*.tfplan
+**/*.tfvars
+**/*.tfvars.json
+*.tfvars
+*.tfvars.json
+.terraformrc
+terraform.rc
+
+# Overrides locales (no forman parte de la configuración base)
+**/*_override.tf
+**/*_override.tf.json
+override.tf
+override.tf.json
+
+# Datos generados por Docker/LocalStack si se usan bind mounts locales
+localstack_data/
+**/localstack_data/
+
+# Sistema operativo y editores
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
