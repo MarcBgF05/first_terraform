@@ -89,3 +89,18 @@ resource "aws_security_group" "nginx-server-sg" {
 }
 
 # Listo para ejecutar. 
+
+# Ouputs / consola: terraform output <nombre de la propiedad>
+output "server_public_ip" {
+	description = "dirección IP pública de la instancia EC2" 
+	value       = aws_instance.example.public_ip
+}
+
+output "server_public_dns" {
+	description = "dirección DNS pública de la instancia EC2" 
+	value       = aws_instance.example.public_dns
+}
+
+# Probando la key SSH
+# ssh -i nginx-server.key ec2-user@<IP_PÚBLICA_DE_LA_INSTANCIA> 
+# ssh ec2-user@<IP_PÚBLICA_DE_LA_INSTANCIA> -i nginx-server.key
