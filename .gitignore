@@ -30,3 +30,7 @@ Thumbs.db
 .vscode/
 .idea/
 
+## llaves ssh
+*.pem
+*.key
+**.pub
