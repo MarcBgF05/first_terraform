@@ -23,12 +23,30 @@ key_name = aws_key_pair.nginx-server-ssh.key_name  # <>.nombre_del_recurso.propi
 # Parte del security group - security group creado en el paso 4. Se asocia a la instancia de EC2. Le asignamos el ID.
 vpc_security_group_ids = [aws_security_group.nginx-server-sg.id]  #
 
+# 5.1 Agregando un tag a la instancia de EC2
+tags = { 
+    Name = "nginx-server"
+    Environment = "test"
+    Owner = "myself" #
+    Team = "DevOps"
+    Project = "first_terraform"  
+}
+
+
 }
 
 # 2. Claves SSH - En aws se sube la clave pública, se usa la privada para la conexión.
 resource "aws_key_pair" "nginx-server-ssh"{
     key_name   = "nginx-server-ssh"
     public_key = file("nginx-server.key.pub")
+    tags = { 
+    Name = "nginx-server-ssh"
+    Environment = "test"
+    Owner = "myself" #
+    Team = "DevOps"
+    Project = "first_terraform"  
+}
+
 }
 
 ##### 4. secury group
@@ -60,6 +78,13 @@ resource "aws_security_group" "nginx-server-sg" {
         cidr_blocks = ["0.0.0.0/0"]
     }
 
+    tags = { 
+    Name = "nginx-server-sg"
+    Environment = "test"
+    Owner = "myself" #
+    Team = "DevOps"
+    Project = "first_terraform"  
+}
 
 }
 
