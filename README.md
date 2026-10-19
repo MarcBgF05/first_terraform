@@ -68,3 +68,28 @@ docker compose run --rm terraform -chdir=hello_world destroy
 ```
 
 Cada ejercicio nuevo puede vivir en su propia carpeta y ejecutarse con `-chdir=nombre_del_ejercicio`.
+
+## Comandos extra.
+LocalStack simula servicios AWS dentro del contenedor localstack; los recursos como buckets S3 no aparecen como contenedores separados en Docker.
+
+Ver el estado de Terraform:
+```bash
+docker compose run --rm terraform -chdir=nombre_de_la_carpeta state list
+```
+
+Ver detalles del bucket registrado en Terraform:
+```bash
+docker compose run --rm terraform -chdir=nombre_de_la_carpeta state show aws_s3_bucket.nombre_de_la_carpeta
+```         
+
+Listar buckets directamente en LocalStack usando AWS CLI
+```bash
+docker compose run --rm --entrypoint aws terraform `
+  --endpoint-url=http://localstack:4566 s3 ls
+```
+
+Ver los objetos dentro del bucket:
+```bash
+docker compose run --rm --entrypoint aws terraform `
+  --endpoint-url=http://localstack:4566 s3 ls s3://nombre-carpeta-local
+```
